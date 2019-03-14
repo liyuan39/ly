@@ -1,0 +1,67 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+using namespacestd
+#include<stdio.h>
+int sort(int A[], int n, &Max) //排序求最大值，返回其下标,用Max存最大值 
+{ Max=A[0];
+int j;      //'j'用来记录最大值的下标  
+for( i=1;i<n;i++)   
+if(A[i]>Max) 
+{ 
+Max=A[i];
+j=i;   
+}
+if(j>0)  
+return j;
+else    return 0; 
+}
+int ch_change_digital(char str[])   //将str[]变成数字 
+{
+int x=0;
+for( i=0;i<strlen(str);i++)
+x=x*10+str[i]-'0';
+return x; 
+} 
+void main()
+{
+ifstream ifile;
+ofstream ofile;
+ifile.open("众数问题\\input.txt");
+char str[5];
+ifile.getline(str,5);
+n=ch_change_digital(str);     //n为第一行值 
+cout<<n<<"\n\n";  
+*a,*b;
+a=new [n];    //定义两个数组，分别存读入的数值和重数  
+b=new [n];
+int  i=0;
+while(1)   //循环读入文件中的数据，用a[]存储   
+{
+if(ifile.eof()||i>n) //"i>=n"用来控制n的值小于文本中数值的个数之情况(eg: n=6以下有10个数）    
+break;
+ifile.getline(str,5);
+a[i++]=ch_change_digital(str);
+}
+ifile.close();
+printf("a:原始数据\n");
+for(i=0;i<n;i++)//控制台输出a[]的值 
+cout<<a[i]<<'\t'; 
+cout<<"\n\n\n";
+for(i=0;i<n;i++)     //求重数   
+{
+b[i]=0;
+for( j=i;j<n;j++)
+if(a[i]==a[j])
+b[i]++; 
+}
+printf("b:各数据对应重数\n");
+for(i=0;i<n;i++)   //控制台输出b[]的值
+cout<<b[i]<<'\t';
+cout<<'\n';
+int  Max;  //用来存重数
+ofile.open("众数问题\\output.txt"); //将数据写回output.txt文件中
+ofile<<"众数为:"<<a[sort(b,n,Max)]<<'\n';
+ofile<<"重数为:"<<Max<<'\n';
+ofile.close();
+}

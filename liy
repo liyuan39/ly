@@ -1,0 +1,15 @@
+public class liyuan{
+public static int llyuan(int n,int j){
+int i;
+for(i=2;i<=n;i++){
+if(n%i==0)
+j++;
+llyuan(n%i);
+}
+return j+1;
+}
+public static void main(String[]args){
+int n=12;
+System.out.println(j+"\n"+llyuan(n));
+}
+}

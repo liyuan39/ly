@@ -1,0 +1,119 @@
+ class Load_Cargo{//装载问题
+ 
+    int[] w;//各货物的重量
+ 
+     int wMax;//最大载重量
+ 
+     int nowWei=0;//当前载重量
+ 
+    int bestWei=0;//最优重量    
+ 
+     
+ 
+     int restCargo=0;//剩余货物重量
+ 
+     int cargo_len=0;//货物数目
+ 
+     
+
+     int []x;//当前解向量    
+
+     int []bestX;//最优解
+
+ 
+
+     Load_Cargo(int[] w,int wMax){
+
+         this.w=w;
+
+        this.wMax=wMax;
+
+         cargo_len=w.length;
+
+         x=new int[cargo_len];
+
+         bestX=new int[cargo_len];
+
+         int i;
+
+         for(i=0;i<cargo_len;i++){
+
+             restCargo+=w[i];
+
+         }
+
+     }
+
+     void solve(){
+
+         BackTrace(0);
+
+         System.out.println("最大装载量："+bestWei);
+
+         System.out.print("应装入的货物：");
+
+        for(int i=0;i<cargo_len;i++){
+             if(bestX[i]==1){
+
+                 System.out.print((i+1)+" ");
+
+             }
+
+         }
+
+         System.out.println();
+
+     }
+
+     void BackTrace(int t){
+
+         if(t<cargo_len){//如果没有抵达叶子节点
+
+             restCargo-=w[t];//剩余货物 减去 当前货物重量
+
+             //遍历左子树
+
+            if(nowWei+w[t]<=wMax){//如果当前货物能放入
+
+                 nowWei+=w[t];
+                 x[t]=1;
+
+                 BackTrace(t+1);
+
+                 nowWei-=w[t];
+
+             }
+
+             //遍历右子树
+
+             if(nowWei+restCargo>bestWei){//如果当前重量 加上 剩余货物 比最优解重
+
+                 x[t]=0;
+
+                 BackTrace(t+1);
+
+            }
+
+             restCargo+=w[t];//恢复 剩余货物重量
+
+         }else{//叶子节点，回溯完毕
+
+             int a;
+             a=0;
+
+             if(nowWei>bestWei){//当前重量大于剩余重量
+
+                 //更新最优解向量
+                 bestX=x.clone();
+
+                 bestWei=nowWei;
+
+            }
+
+         }
+
+     }
+
+     
+
+ }
